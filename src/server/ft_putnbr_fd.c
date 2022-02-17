@@ -1,33 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.h                                           :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eestelle </var/spool/mail/eestelle>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/13 17:42:23 by eestelle          #+#    #+#             */
-/*   Updated: 2022/02/17 16:48:52 by eestelle         ###   ########.fr       */
+/*   Created: 2022/02/17 16:42:55 by eestelle          #+#    #+#             */
+/*   Updated: 2022/02/17 16:43:18 by eestelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SERVER_H
-# define SERVER_H
+#include "server.h"
 
-# include <sys/types.h>
-# include <unistd.h>
-# include "../../ft_printf/src/ft_printf.h"
-
-typedef	struct s_string32
+void	ft_putnbr_fd(int n, int fd)
 {
-	int		flag;
-	char	arr[32];
-	int32_t	bit;
-	int32_t	count;
-	t_pid	pid;
-}	t_string32;
+	char		arr[10];
+	size_t		len;
+	long long	value;
 
-void	ft_putnbr_fd(int n, int fd);
-void	ft_init_signals(void);
-
-#endif
-
+	value = n;
+	if (value < 0)
+	{
+		write(fd, "-", 1);
+		value *= -1;
+	}
+	else if (value == 0)
+	{
+		write(fd, "0", 1);
+		return ;
+	}
+	len = 0;
+	while (value)
+	{
+		arr[10 - 1 - (len++)] = '0' + value % 10;
+		value /= 10;
+	}
+	write(fd, arr + 10 - len, len);
+}
