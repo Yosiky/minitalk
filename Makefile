@@ -17,12 +17,13 @@ HDR_SERVER		=	src/server/server.h
 # ------------------------------- CLIENT --------------------------------
 CLIENT			=	client
 SRC_CLIENT		=	$(shell find ${SRC_DIR}/client -type f -name "*.c" | cut -b 5-)
-OBJ_CLIENT		=	
+OBJ_CLIENT		=	$(addprefix $(OBJ_DIR)/,$(SRC_CLIENT:c=o))
 HDR_CLIENT		=	src/client/client.h
 
 # ----------------------------------------------------------------------
 all:	$(OBJ_DIR)
 	$(MAKE) -j $(SERVER)
+	$(MAKE) -j $(CLIENT)
 
 $(OBJ_DIR):
 	mkdir -p $@/server
@@ -33,8 +34,8 @@ $(SERVER):	$(OBJ_SERVER) $(HDR_SERVER)
 	$(CC) $(OBJ_SERVER) $(HDR_SERVER) -o $@
 
 # ------------------------- Compile program Client --------------------
-$(ClIENT):	$(OBJ_CLIENT) $(HDR_CLIENT)
-	$(CC) $(OBJ_CLIENT) $(HDR_CLIENT)) -o $@
+$(CLIENT):	$(OBJ_CLIENT) $(HDR_CLIENT)
+	$(CC) $(OBJ_CLIENT) $(HDR_CLIENT) -o $@
 
 $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
