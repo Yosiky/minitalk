@@ -6,7 +6,7 @@
 /*   By: eestelle </var/spool/mail/eestelle>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 17:42:23 by eestelle          #+#    #+#             */
-/*   Updated: 2022/02/17 16:48:52 by eestelle         ###   ########.fr       */
+/*   Updated: 2022/02/17 17:59:52 by eestelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 # include <sys/types.h>
 # include <unistd.h>
-# include "../../ft_printf/src/ft_printf.h"
+# include <signal.h>
+# include <stdlib.h>
 
 typedef	struct s_string32
 {
@@ -23,11 +24,11 @@ typedef	struct s_string32
 	char	arr[32];
 	int32_t	bit;
 	int32_t	count;
-	t_pid	pid;
+	pid_t	pid;
 }	t_string32;
 
 void	ft_putnbr_fd(int n, int fd);
-void	ft_init_signals(void);
+int		ft_init_signals(void);
 
 #endif
 
