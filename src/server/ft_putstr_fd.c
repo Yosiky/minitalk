@@ -1,33 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eestelle </var/spool/mail/eestelle>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/17 18:11:45 by eestelle          #+#    #+#             */
-/*   Updated: 2022/02/18 01:41:44 by eestelle         ###   ########.fr       */
+/*   Created: 2022/02/17 18:34:16 by eestelle          #+#    #+#             */
+/*   Updated: 2022/02/18 00:58:14 by eestelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "client.h"
+#include "server.h"
 
-
-t_message	message;
-
-int	main(int argc, char **argv)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	if (argc == 3)
+	unsigned char	*ptr;
+
+	ptr = (unsigned char *)s;
+	while (n--)
 	{
-		ft_init_signals();
-		message.str = argv[2];
-		message.pid = ft_atoi(argv[1]);
-		if (kill(message.pid, SIGUSR1) < 0)
-			write(2, "Error: kill\n", 12);
-		while (1)
-			pause();
+		if (*(ptr) == (unsigned char)c)
+			return ((void *)ptr);
+		ptr++;
 	}
-	else
-		ft_putstr_fd("./client [PID Server] \"Your string\"\n", 1);
-	return (0);
+	return ((void *)0);
+}
+
+static size_t	ft_strlen(const char *s)
+{
+	return ((size_t)ft_memchr(s, '\0', -1) - (size_t)s);
+}
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	if (!s)
+		return ;
+	write(fd, s, ft_strlen(s));
 }

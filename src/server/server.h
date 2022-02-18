@@ -6,7 +6,7 @@
 /*   By: eestelle </var/spool/mail/eestelle>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/13 17:42:23 by eestelle          #+#    #+#             */
-/*   Updated: 2022/02/17 17:59:52 by eestelle         ###   ########.fr       */
+/*   Updated: 2022/02/18 00:57:20 by eestelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef	struct s_string32
 	pid_t	pid;
 }	t_string32;
 
+void	ft_putstr_fd(char *str, int fd);
 void	ft_putnbr_fd(int n, int fd);
 int		ft_init_signals(void);
 

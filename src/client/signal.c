@@ -6,7 +6,7 @@
 /*   By: eestelle </var/spool/mail/eestelle>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 18:46:11 by eestelle          #+#    #+#             */
-/*   Updated: 2022/02/18 00:48:27 by eestelle         ###   ########.fr       */
+/*   Updated: 2022/02/18 10:46:53 by eestelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,45 +14,42 @@
 
 static void	send_char()
 {
-	int	i;
+	static int	i = 0;
 	int	sig;
-	int	c;
 
-	i = -1;
-	c = *(message.str);
-	while (++i < 8)
+	i++;
+	if (0x80 & *(message.str))
+		sig = SIGUSR2;
+	else
+		sig = SIGUSR1;
+	*(message.str) <<= 1;
+	if (i == 8)
 	{
-		if (0x80 & c)
-			sig = SIGUSR2;
-		else
-			sig = SIGUSR1;
-		if (kill(message.pid, sig) < 0)
-		{
-			ft_putstr_fd("Error: kill\n", 2);
-			exit(0);
-		}
-		c <<= 1;
+		++message.str;
+		i = 0;
 	}
-	++message.str;
+	if (kill(message.pid, sig) < 0)
+	{
+		ft_putstr_fd("Error: kill\n", 2);
+		exit(0);
+	}
+	
 }
 
 static void	recive_answer(int sig)
 {
 	(void)sig;
 	ft_putstr_fd("Answer is server\n", 1);
+	if (kill(message.pid, SIGUSR2) < 0)
+		ft_putstr_fd("Error: kill", 1);
 	exit(0);
 }
 
 static void	send_message(int sig)
 {
-	int	i;
 
 	(void)sig;
-	i = -1;
-	while (message.str[++i] != '\0')
-	{
-		send_char();
-	}
+//	ft_putstr_fd("send bit\n", 1);
 	send_char();
 }
 
