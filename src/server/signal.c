@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eestelle </var/spool/mail/eestelle>        +#+  +:+       +#+        */
+/*   By: eestelle <eestelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 00:30:15 by eestelle          #+#    #+#             */
-/*   Updated: 2022/02/23 01:37:41 by eestelle         ###   ########.fr       */
+/*   Updated: 2022/02/24 22:41:09 by eestelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,32 @@ static void	processing(int sig, siginfo_t *info, __attribute__((unused)) void *p
 {
 	static t_buff32	buff = {"", 0, 0, 0, 0, 0};
 
+	buff.str[32] = '\0';
 	if (buff.flag == 0)
+	{
 		start_communication(info, &buff);
+	}
 	else if (buff.flag == 1)
 	{
 		if (sig == SIGUSR1)
 			ee_buff32addbit(&buff, 0);
 		else
 			ee_buff32addbit(&buff, 1);
-		if ((buff.size > 0 && buff.str[buff.size - 1] == '\0') || buff.size == 32)
+	}
+	//if ((buff.size > 0 && buff.str[buff.size - 1] == '\0') || buff.size == 32)
+	if (buff.size)
+	{
+		write(1, buff.str, 1);
+		//ft_putstr_fd(buff.str, 1);
+		if (buff.str[buff.size - 1] == '\0')
 		{
-			ft_putstr_fd(buff.str, buff.size);
+			buff.flag = 0;
 			buff.sig = SIGUSR2;
 		}
+		else
+
+			buff.sig = SIGUSR1;
+		buff.size = 0;
 	}
 	if (kill(buff.pid, buff.sig) < 0)
 	{

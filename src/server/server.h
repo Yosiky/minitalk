@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eestelle </var/spool/mail/eestelle>        +#+  +:+       +#+        */
+/*   By: eestelle <eestelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 23:56:12 by eestelle          #+#    #+#             */
-/*   Updated: 2022/02/23 01:35:28 by eestelle         ###   ########.fr       */
+/*   Updated: 2022/02/24 13:37:57 by eestelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 typedef struct s_buff32
 {
-	char	str[32];
+	char	str[33];
 	size_t	size;
 	size_t	count_bit;
 	pid_t	pid;
