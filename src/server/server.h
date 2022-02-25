@@ -6,7 +6,7 @@
 /*   By: eestelle <eestelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 23:56:12 by eestelle          #+#    #+#             */
-/*   Updated: 2022/02/24 13:37:57 by eestelle         ###   ########.fr       */
+/*   Updated: 2022/02/25 11:52:16 by eestelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@ typedef struct s_buff32
 	size_t	count_bit;
 	pid_t	pid;
 	char	flag;
-	int		sig;
+	volatile sig_atomic_t	sig;
 }	t_buff32;
+
+extern t_buff32	buff;
 
 void	init_signal(void);
 void	ft_putnbr_fd(int value, int fd);
