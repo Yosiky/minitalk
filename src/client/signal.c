@@ -6,7 +6,7 @@
 /*   By: eestelle <eestelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 12:56:02 by eestelle          #+#    #+#             */
-/*   Updated: 2022/02/25 11:29:34 by eestelle         ###   ########.fr       */
+/*   Updated: 2022/02/25 13:04:39 by eestelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,16 @@
 
 static void	processing(int sig, __attribute__((unused)) siginfo_t *info, __attribute__((unused)) void *ptr)
 {
+	state.flag = 1;
 	if (sig == SIGUSR1)
 	{
 		//ft_putstr_fd("0", 1);
-		state = 1;
+		state.state = 1;
 	}
 	if (sig == SIGUSR2)
 	{
 		//ft_putstr_fd("1", 1);
-		state = 2;
+		state.state = 2;
 	}
 
 }
