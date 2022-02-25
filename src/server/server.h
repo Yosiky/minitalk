@@ -6,7 +6,7 @@
 /*   By: eestelle <eestelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 23:56:12 by eestelle          #+#    #+#             */
-/*   Updated: 2022/02/25 11:52:16 by eestelle         ###   ########.fr       */
+/*   Updated: 2022/02/25 12:58:04 by eestelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_buff32
 	pid_t	pid;
 	char	flag;
 	volatile sig_atomic_t	sig;
+	char	state;
 }	t_buff32;
 
 extern t_buff32	buff;

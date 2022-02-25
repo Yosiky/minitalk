@@ -6,7 +6,7 @@
 /*   By: eestelle <eestelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 00:30:15 by eestelle          #+#    #+#             */
-/*   Updated: 2022/02/25 11:51:49 by eestelle         ###   ########.fr       */
+/*   Updated: 2022/02/25 12:59:21 by eestelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	processing(int sig, siginfo_t *info, __attribute__((unused)) void *ptr)
 {
+	buff.state = 1;
 	if (buff.flag == 0)
 	{
 		buff.pid = info->si_pid;
