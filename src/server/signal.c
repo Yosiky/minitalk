@@ -6,24 +6,23 @@
 /*   By: eestelle <eestelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 00:30:15 by eestelle          #+#    #+#             */
-/*   Updated: 2022/02/25 12:59:21 by eestelle         ###   ########.fr       */
+/*   Updated: 2022/02/25 13:30:27 by eestelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "server.h"
 
-static void	processing(int sig, siginfo_t *info, __attribute__((unused)) void *ptr)
+static void	processing(int sig, siginfo_t *info,
+	__attribute__((unused)) void *ptr)
 {
-	buff.state = 1;
-	if (buff.flag == 0)
+	g_buff.state = 1;
+	if (g_buff.flag == 0)
 	{
-		buff.pid = info->si_pid;
-		buff.sig = SIGUSR1;
+		g_buff.pid = info->si_pid;
+		g_buff.sig = SIGUSR1;
 	}
-	else if (buff.flag == 1)
-	{
-		buff.sig = sig;
-	}
+	else if (g_buff.flag == 1)
+		g_buff.sig = sig;
 }
 
 void	init_signal(void)
