@@ -6,13 +6,13 @@
 /*   By: eestelle <eestelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 12:39:38 by eestelle          #+#    #+#             */
-/*   Updated: 2022/02/24 23:23:52 by eestelle         ###   ########.fr       */
+/*   Updated: 2022/02/25 11:48:48 by eestelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "client.h"
 
-int	state;
+volatile sig_atomic_t	state;
 
 static int	send_bit(char c)
 {
@@ -41,18 +41,25 @@ int	main(int argc, char **argv)
 	{
 		init_signal();
 		pid = ft_atoi(argv[1]);
-		if (kill(pid, SIGUSR1) < 0)
-		{
-			ft_putstr_fd("Error: kill", 2);
-			exit(0);
-		}
+		sig = SIGUSR1;
 		while (1)
 		{
+			if (kill(pid, sig) < 0)
+			{
+				ft_putstr_fd("Error: kill\n", 2);
+				exit(0);
+			}
 			pause();
 			if (state == 1)
 			{
 				++bit;
 				sig = send_bit(argv[2][size] & 0x80);
+				/*
+				if (sig == SIGUSR1)
+					ft_putstr_fd("0", 2);
+				else
+					ft_putstr_fd("1", 2);
+				*/
 				argv[2][size] = argv[2][size] << 1;
 				if (bit == 8)
 				{
@@ -64,11 +71,6 @@ int	main(int argc, char **argv)
 			{
 				ft_putstr_fd("Sending message finish\n", 1);
 				return (0);
-			}
-			if (kill(pid, sig) < 0)
-			{
-				ft_putstr_fd("Error: kill\n", 2);
-				exit(0);
 			}
 		}
 	}
