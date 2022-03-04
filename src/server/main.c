@@ -6,7 +6,7 @@
 /*   By: eestelle <eestelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 23:57:17 by eestelle          #+#    #+#             */
-/*   Updated: 2022/02/25 13:22:47 by eestelle         ###   ########.fr       */
+/*   Updated: 2022/03/04 11:35:18 by eestelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,33 @@ static void	ee_buff32init(t_buff32 *buff)
 	buff->state = 0;
 }
 
+static void	processing(void)
+{
+	if (g_buff.flag)
+	{
+		if (g_buff.sig == SIGUSR1)
+			ee_buff32addbit(&g_buff, 0);
+		else
+			ee_buff32addbit(&g_buff, 1);
+	}
+	else
+		g_buff.flag = 1;
+	g_buff.sig = SIGUSR1;
+	if (g_buff.size)
+	{
+		write(1, g_buff.str, 1);
+		if (g_buff.str[g_buff.size - 1] == '\0')
+		{
+			g_buff.flag = 0;
+			g_buff.sig = SIGUSR2;
+		}
+		else
+			g_buff.sig = SIGUSR1;
+		g_buff.size = 0;
+	}
+	g_buff.state = 0;
+}
+
 int	main(void)
 {
 	ee_buff32init(&g_buff);
@@ -36,29 +63,7 @@ int	main(void)
 	{
 		if (g_buff.state)
 		{
-			if (g_buff.flag)
-			{
-				if (g_buff.sig == SIGUSR1)
-					ee_buff32addbit(&g_buff, 0);
-				else
-					ee_buff32addbit(&g_buff, 1);
-			}
-			else
-				g_buff.flag = 1;
-			g_buff.sig = SIGUSR1;
-			if (g_buff.size)
-			{
-				write(1, g_buff.str, 1);
-				if (g_buff.str[g_buff.size - 1] == '\0')
-				{
-					g_buff.flag = 0;
-					g_buff.sig = SIGUSR2;
-				}
-				else
-					g_buff.sig = SIGUSR1;
-				g_buff.size = 0;
-			}
-			g_buff.state = 0;
+			processing();
 			if (g_buff.flag || g_buff.sig == SIGUSR2)
 			{
 				if (kill(g_buff.pid, g_buff.sig) < 0)
