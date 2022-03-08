@@ -31,11 +31,11 @@ $(OBJ_DIR):
 
 # ------------------------- Compile program Server --------------------
 $(SERVER):	$(OBJ_SERVER) $(HDR_SERVER)
-	$(CC) $(OBJ_SERVER) $(HDR_SERVER) -o $@
+	$(CC) $(OBJ_SERVER) -o $@
 
 # ------------------------- Compile program Client --------------------
 $(CLIENT):	$(OBJ_CLIENT) $(HDR_CLIENT)
-	$(CC) $(OBJ_CLIENT) $(HDR_CLIENT) -o $@
+	$(CC) $(OBJ_CLIENT) -o $@
 
 $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
