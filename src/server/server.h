@@ -6,12 +6,12 @@
 /*   By: eestelle <eestelle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 23:56:12 by eestelle          #+#    #+#             */
-/*   Updated: 2022/02/25 13:28:56 by eestelle         ###   ########.fr       */
+/*   Updated: 2022/03/08 13:50:23 by eestelle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SERVER_H
-# define SERFER_H
+# define SERVER_H
 
 # include <unistd.h>
 # include <signal.h>
