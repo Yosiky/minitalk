@@ -20,10 +20,28 @@ SRC_CLIENT		=	$(shell find ${SRC_DIR}/client -type f -name "*.c" | cut -b 5-)
 OBJ_CLIENT		=	$(addprefix $(OBJ_DIR)/,$(SRC_CLIENT:c=o))
 HDR_CLIENT		=	src/client/client.h
 
+# ----------------------------- BONUS SERVER ---------------------------
+BONUS_SERVER	=	server_bon
+BONUS_CLIENT	=	client_bon
+SRC_BON_SERVER	=	$(shell find ${SRC_DIR}/bonus/server -type f -name "*.c" | cut -b 5-)
+OBJ_BON_SERVER		=	$(addprefix $(OBJ_DIR)/bonus/,$(SRC_SERVER:c=o))
+SRC_BON_CLIENT	=	$(shell find ${SRC_DIR}/bonus/client -type f -name "*.c" | cut -b 5-)
+OBJ_BON_CLIENT		=	$(addprefix $(OBJ_DIR)/bonus/,$(SRC_CLIENT:c=o))
+
+BONUS_DIR		=	obj/bonus
+
+
 # ----------------------------------------------------------------------
 all:	$(OBJ_DIR)
 	$(MAKE) -j $(SERVER)
 	$(MAKE) -j $(CLIENT)
+	
+bonus: $(BONUS_DIR) $(BONUS_SERVER) $(BONUS_CLIENT)
+
+$(BONUS_DIR):
+	mkdir -p $@/server
+	mkdir -p $@/client
+
 
 $(OBJ_DIR):
 	mkdir -p $@/server
@@ -36,6 +54,12 @@ $(SERVER):	$(OBJ_SERVER) $(HDR_SERVER)
 # ------------------------- Compile program Client --------------------
 $(CLIENT):	$(OBJ_CLIENT) $(HDR_CLIENT)
 	$(CC) $(OBJ_CLIENT) -o $@
+
+$(BONUS_SERVER): $(OBJ_BON_SERVER) $(HDR_BON_SERVER)
+	$(CC) $(OBJ_BON_SERVER) -o server
+
+$(BONUS_CLIENT): $(OBJ_BON_CLIENT) $(HDR_BON_CLIENT)
+	$(CC) $(OBJ_BON_CLIENT) -o client
 
 $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
