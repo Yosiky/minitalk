@@ -36,14 +36,20 @@ all:	$(OBJ_DIR)
 	$(MAKE) -j $(SERVER)
 	$(MAKE) -j $(CLIENT)
 	
-bonus: $(BONUS_DIR) $(BONUS_SERVER) $(BONUS_CLIENT)
+bonus: $(BONUS_DIR)
+	$(MAKE) -j $(BONUS_SERVER)
+	$(MAKE) -j $(BONUS_CLIENT)
 
 $(BONUS_DIR):
+	mkdir -p $(OBJ_DIR)/server
+	mkdir -p $(OBJ_DIR)/client
 	mkdir -p $@/server
 	mkdir -p $@/client
 
 
 $(OBJ_DIR):
+	mkdir -p $(BONUS_DIR)/server
+	mkdir -p $(BONUS_DIR)/client
 	mkdir -p $@/server
 	mkdir -p $@/client
 
