@@ -23,12 +23,18 @@ HDR_CLIENT		=	src/client/client.h
 # ----------------------------- BONUS SERVER ---------------------------
 BONUS_SERVER	=	server_bon
 BONUS_CLIENT	=	client_bon
+
 SRC_BON_SERVER	=	$(shell find ${SRC_DIR}/bonus/server -type f -name "*.c" | cut -b 5-)
 OBJ_BON_SERVER		=	$(addprefix $(OBJ_DIR)/bonus/,$(SRC_SERVER:c=o))
+
 SRC_BON_CLIENT	=	$(shell find ${SRC_DIR}/bonus/client -type f -name "*.c" | cut -b 5-)
-OBJ_BON_CLIENT		=	$(addprefix $(OBJ_DIR)/bonus/,$(SRC_CLIENT:c=o))
+OBJ_BON_CLIENT	=	$(addprefix $(OBJ_DIR)/bonus/,$(SRC_CLIENT:c=o))
+
+HDR_BON_SERVER	=	src/bonus/server/server_bonus.h
+HDR_BON_CLIENT	=	src/bonus/client/client_bonus.h
 
 BONUS_DIR		=	obj/bonus
+
 
 
 # ----------------------------------------------------------------------
@@ -45,7 +51,6 @@ $(BONUS_DIR):
 	mkdir -p $(OBJ_DIR)/client
 	mkdir -p $@/server
 	mkdir -p $@/client
-
 
 $(OBJ_DIR):
 	mkdir -p $(BONUS_DIR)/server
