@@ -25,10 +25,10 @@ BONUS_SERVER	=	server_bon
 BONUS_CLIENT	=	client_bon
 
 SRC_BON_SERVER	=	$(shell find ${SRC_DIR}/bonus/server -type f -name "*.c" | cut -b 5-)
-OBJ_BON_SERVER		=	$(addprefix $(OBJ_DIR)/bonus/,$(SRC_SERVER:c=o))
+OBJ_BON_SERVER		=	$(addprefix $(OBJ_DIR)/,$(SRC_BON_SERVER:c=o))
 
 SRC_BON_CLIENT	=	$(shell find ${SRC_DIR}/bonus/client -type f -name "*.c" | cut -b 5-)
-OBJ_BON_CLIENT	=	$(addprefix $(OBJ_DIR)/bonus/,$(SRC_CLIENT:c=o))
+OBJ_BON_CLIENT	=	$(addprefix $(OBJ_DIR)/,$(SRC_BON_CLIENT:c=o))
 
 HDR_BON_SERVER	=	src/bonus/server/server_bonus.h
 HDR_BON_CLIENT	=	src/bonus/client/client_bonus.h
@@ -45,6 +45,24 @@ all:	$(OBJ_DIR)
 bonus: $(BONUS_DIR)
 	$(MAKE) -j $(BONUS_SERVER)
 	$(MAKE) -j $(BONUS_CLIENT)
+
+echo:
+	@echo "Server:"
+	@echo $(SRC_SERVER)
+	@echo $(OBJ_SERVER)
+	@echo $(HDR_SERVER)
+	@echo "Client:"
+	@echo $(SRC_CLIENT)
+	@echo $(OBJ_CLIENT)
+	@echo $(HDR_CLIENT)
+	@echo "Server bon:"
+	@echo $(SRC_BON_SERVER)
+	@echo $(OBJ_BON_SERVER)
+	@echo $(HDR_BON_SERVER)
+	@echo "Client bon:"
+	@echo $(SRC_BON_CLIENT)
+	@echo $(OBJ_BON_CLIENT)
+	@echo $(HDR_BON_CLIENT)
 
 $(BONUS_DIR):
 	mkdir -p $(OBJ_DIR)/server

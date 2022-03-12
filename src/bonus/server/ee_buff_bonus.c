@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "server.h"
+#include "server_bonus.h"
 
 void	ee_buff32addbit(t_buff32 *buff, int bit)
 {
