@@ -25,6 +25,8 @@ all:	$(OBJ_DIR)
 	$(MAKE) -j $(SERVER)
 	$(MAKE) -j $(CLIENT)
 
+bonus: all
+
 $(OBJ_DIR):
 	mkdir -p $@/server
 	mkdir -p $@/client
